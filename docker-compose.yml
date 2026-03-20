@@ -1,0 +1,40 @@
+# Stack completa: Nest (porta 3000) + SPA Vite via Nginx (porta 8080 → 80 no container)
+# Uso: na raiz do repositório → docker compose up --build
+# UI: http://localhost:8080  |  API direta / Postman: http://localhost:3000
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - backend_uploads:/app/uploads
+      - backend_data:/app/data
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATABASE_URL: file:/app/data/dev.db
+      # URLs públicas a partir do host (documentos em /files no Nest)
+      BASE_URL: http://localhost:3000
+      # Substitua pelos webhooks reais do n8n (placeholders válidos só para subir o container)
+      N8N_WEBHOOK_CREATE_CHATBOT: https://example.com/webhooks/create-chatbot
+      N8N_WEBHOOK_DOCUMENT_UPSERT: https://example.com/webhooks/document-upsert
+      N8N_WEBHOOK_STATUS: https://example.com/webhooks/status
+
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE: /api
+        VITE_ENABLE_BASE44_AUTH: "false"
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend_uploads:
+  backend_data:

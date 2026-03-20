@@ -37,3 +37,11 @@ Open [Base44.com](http://Base44.com) and click on Publish.
 Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
 
 Support: [https://app.base44.com/support](https://app.base44.com/support)
+
+---
+
+## Nest API + Docker + Vercel (este monorepo)
+
+- **Stack completa (Docker):** na raiz do repositório, `docker compose up --build` — UI em [http://localhost:8080](http://localhost:8080). Ver [../README.md](../README.md).
+- **Dev:** `VITE_API_BASE=/api` (padrão) e backend em `http://127.0.0.1:3000`; `npm run dev` usa proxy do Vite.
+- **Vercel:** Root Directory = `front`. Definir `VITE_API_BASE` com a URL pública do Nest e `VITE_ENABLE_BASE44_AUTH=false`. Detalhes no README da raiz.
