@@ -1,0 +1,87 @@
+import { PrismaService } from '../prisma/prisma.service';
+import { N8nService } from '../integrations/n8n/n8n.service';
+import { ConfigService } from '@nestjs/config';
+import { HttpService } from '@nestjs/axios';
+import { CreateDocumentFromUrlDto } from './dto/from-url.dto';
+export declare class DocumentsService {
+    private readonly prisma;
+    private readonly n8n;
+    private readonly config;
+    private readonly http;
+    private readonly uploadsRoot;
+    constructor(prisma: PrismaService, n8n: N8nService, config: ConfigService, http: HttpService);
+    listByChatbot(chatbotId: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        chatbotId: string;
+        status: import("@prisma/client").$Enums.DocumentStatus;
+        originalName: string;
+        mimeType: string;
+        size: number;
+        storagePath: string;
+        publicUrl: string;
+        sourceType: import("@prisma/client").$Enums.DocumentSourceType;
+        sourceUrl: string | null;
+    }[]>;
+    softDelete(chatbotId: string, docId: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        chatbotId: string;
+        status: import("@prisma/client").$Enums.DocumentStatus;
+        originalName: string;
+        mimeType: string;
+        size: number;
+        storagePath: string;
+        publicUrl: string;
+        sourceType: import("@prisma/client").$Enums.DocumentSourceType;
+        sourceUrl: string | null;
+    }>;
+    private getBaseUrl;
+    private buildPublicUrl;
+    private ensureAllowed;
+    private saveBufferToDisk;
+    createFromUpload(chatbotId: string, file: Express.Multer.File): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        chatbotId: string;
+        status: import("@prisma/client").$Enums.DocumentStatus;
+        originalName: string;
+        mimeType: string;
+        size: number;
+        storagePath: string;
+        publicUrl: string;
+        sourceType: import("@prisma/client").$Enums.DocumentSourceType;
+        sourceUrl: string | null;
+    }>;
+    createFromUrl(chatbotId: string, dto: CreateDocumentFromUrlDto): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        chatbotId: string;
+        status: import("@prisma/client").$Enums.DocumentStatus;
+        originalName: string;
+        mimeType: string;
+        size: number;
+        storagePath: string;
+        publicUrl: string;
+        sourceType: import("@prisma/client").$Enums.DocumentSourceType;
+        sourceUrl: string | null;
+    }>;
+    createFromUrlForSwagger(chatbotId: string, dto: CreateDocumentFromUrlDto): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        chatbotId: string;
+        status: import("@prisma/client").$Enums.DocumentStatus;
+        originalName: string;
+        mimeType: string;
+        size: number;
+        storagePath: string;
+        publicUrl: string;
+        sourceType: import("@prisma/client").$Enums.DocumentSourceType;
+        sourceUrl: string | null;
+    }>;
+}
